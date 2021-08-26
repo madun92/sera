@@ -18,7 +18,9 @@ $router->get('/', function () use ($router) {
     return $router->app->version();
 });
 $router->group(['prefix' => 'api'],function() use ($router){
+    $router->get('/debug-sentry', function () {
     $router->get('/task-7', 'TaskController@task7');
+    $router->get('/task-8', 'TaskController@task8');
     $router->post('/register', 'AuthController@register');
     $router->post('/login', 'AuthController@login');
     $router->get('/check-login', 'AuthController@checkLogin');

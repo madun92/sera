@@ -37,7 +37,11 @@ class Handler extends ExceptionHandler
      */
     public function report(Throwable $exception)
     {
-        // dd($exception);
+        if (env('ENABLE_SENTRY', false)) {
+            if (app()->bound('sentry') && $this->shouldReport($exception)) {
+                app('sentry')->captureException($exception);
+            }
+        }
         parent::report($exception);
     }
 
@@ -52,7 +56,6 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Throwable $exception)
     {
-        // dd($exception);
         // if ($request->wantsJson()) {
             if($exception instanceof ValidationException) {
                 return response()->json([
