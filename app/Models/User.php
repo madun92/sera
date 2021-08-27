@@ -16,11 +16,11 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
  *
  * @package 
  *
- * @author  Donii Sergii <doniysa@gmail.com>
+ * @author  Wahid Hidayat <lamjoart@gmail.com>
  *
  * @OA\Schema(
- *     description="Pet model",
- *     title="Pet model",
+ *     description="User model",
+ *     title="User model",
  *     required={"name", "fillable"},
  *     @OA\Xml(
  *         name="User"
@@ -34,7 +34,6 @@ class User extends Model implements AuthenticatableContract, AuthorizableContrac
     /**
      * The attributes that are mass assignable.
      *
-     * @var array
      * 
      *   @OA\Property(
      *     format="int64",

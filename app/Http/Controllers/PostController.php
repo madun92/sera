@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Validation\UnauthorizedException;
 
 class PostController extends Controller
 {
@@ -17,6 +18,25 @@ class PostController extends Controller
     {
         //
     }
+
+    /**
+     * Listing post
+     * 
+     * @OA\Get(
+     *     path="/post",
+     *     tags={"Post"},
+     *     description="Home page",
+     *     @OA\Response(response="default", description="listing post"),
+     *     @OA\Response(
+     *         response=200,
+     *         description="successful operation",
+     *          @OA\JsonContent(
+     *             type="array",
+     *             @OA\Items(ref="#/components/schemas/User")
+     *         ),
+     *     ),
+     * )
+     */
     /**
      * Display a listing of the resource.
      *
@@ -51,6 +71,34 @@ class PostController extends Controller
     }
 
     /**
+     * Show a post
+     *
+     * @OA\Get(
+     *     path="/post/{postId}",
+     *     tags={"Post"},
+     *     operationId="showpost",
+     *     @OA\Parameter(
+     *         name="postId",
+     *         in="path",
+     *         description="ID of post to return",
+     *         required=true,
+     *         example="6129116617c8fef7ff49c890",
+     *         @OA\Schema(
+     *             type="string",
+     *             format="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="post not found"
+     *     ),
+     * )
+     */
+    /**
      * Display the specified resource.
      *
      * @param  int  $id
@@ -73,15 +121,35 @@ class PostController extends Controller
     //    }));
         // $data = Post::find($id);
         // dd($data['_id']->__toString());
-        $data['id']     =  $data['_id']->__toString();
-        $data = ["id" => $data['_id']->__toString() ] + $data;
-        unset($data["_id"]);
         if($data) {
+            $data['id']     =  $data['_id']->__toString();
+            $data = ["id" => $data['_id']->__toString() ] + $data;
+            unset($data["_id"]);
             return $this->responseJson(false, $data, "Show Post");
         }
         abort(404);
     }
 
+    /**
+     * Update an existing post
+     *
+     * @OA\Put(
+     *     path="/post",
+     *     tags={"Post"},
+     *     operationId="updatepost",
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="post not found"
+     *     ),
+     *     security={
+     *         {"bearerAuth": {"write:posts", "read:posts"}}
+     *     },
+     * )
+     */
     /**
      * Update the specified resource in storage.
      *
@@ -110,6 +178,37 @@ class PostController extends Controller
     }
 
     /**
+     * Delete an existing post
+     *
+     * @OA\Delete(
+     *     path="/post/{postId}",
+     *     tags={"Post"},
+     *     operationId="deletepost",
+     *     @OA\Parameter(
+     *         name="postId",
+     *         in="path",
+     *         description="ID of post",
+     *         required=true,
+     *         example="6129116617c8fef7ff49c890",
+     *         @OA\Schema(
+     *             type="string",
+     *             format="string"
+     *         )
+     *     ),
+     *     @OA\Response(
+     *         response=200,
+     *         description="Success"
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="post not found"
+     *     ),
+     *     security={
+     *         {"bearerAuth": {}}
+     *     },
+     * )
+     */
+    /**
      * Remove the specified resource from storage.
      *
      * @param  int  $id
@@ -117,7 +216,12 @@ class PostController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $post = auth()->user()->posts()->find($id);
+        if (!$post) {
+            throw new UnauthorizedException("you don't have permission to do this.");
+        }
+        $post->delete();
+        return $this->responseJson(false, [], "Delete post succesfully!");
     }
 
     //

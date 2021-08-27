@@ -27,6 +27,20 @@ use Laravel\Lumen\Routing\Controller as BaseController;
  *         url="http://swagger.io"
  *     )
  * )
+ * 
+ * @OA\Schemes(format="http")
+ * @OA\SecurityScheme(
+ *      securityScheme="bearerAuth",
+ *      in="header",
+ *      name="Authorization",
+ *      type="http",
+ *      scheme="Bearer",
+ *      bearerFormat="JWT",
+ * ),
+ * @OA\Tag(
+ *     name="Auth",
+ *     description="Auth endpoints",
+ * )
  */
 class Controller extends BaseController
 {

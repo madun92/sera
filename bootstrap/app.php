@@ -61,6 +61,8 @@ $app->configure('swagger-lume');
 */
 
 $app->configure('app');
+$app->configure('mail');
+$app->configure('services');
 
 /*
 |--------------------------------------------------------------------------
@@ -99,6 +101,8 @@ $app->register(Jenssegers\Mongodb\MongodbServiceProvider::class);
 $app->register(Tymon\JWTAuth\Providers\LumenServiceProvider::class);
 $app->register(\SwaggerLume\ServiceProvider::class);
 $app->register('Sentry\Laravel\ServiceProvider');
+$app->register(Illuminate\Mail\MailServiceProvider::class);
+$app->register(Kreait\Laravel\Firebase\ServiceProvider::class);
 
 // $app->withEloquent();
 
