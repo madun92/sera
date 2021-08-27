@@ -3,8 +3,19 @@
 #### 1. Membuat API CRUD menggunakan Lumen/Node.js/.net/Go dengan layanan MongoDB Atlas / MongoDB Local.
 #### 2. Membuat API Login, Check Login, Destroy Token ( Logout ) menggunakan JWT dengan Lumen/Node.js/.net/Go.
 #### 3.Membuat API CRUD menggunakan Lumen/Node.js/.net/Go dengan layanan Firebase Realtime Database / Firebase Firestore.
+    setup .env field below
+    FIREBASE_CREDENTIALS=
+    FIREBASE_DATABASE_URL=
+    
+    api:
+    hasil: http://your-domain/api/firebase (create, update, delete);
+    hasil: http://your-domain/api/firebase/{id} (read);
 #### 4. Membuat dockerfile (php 7.3 , sqlsrv driver , redis driver ( redis servernya tidak perlu, hanya driver nya saja) , driver mongodb , nginx web server ) untuk membuild Lumen.
+     Ex: 
+        - docker build . -t sera:1.0 
+        - docker run -itdp 8000:80 -v `pwd`:/var/www/html --name serav1 sera:1.0
 #### 5. Membuat Unit Test API CRUD menggunakan Lumen/Node.js/.net/Go berdasarkan yang sudah dibuat ( 3 api saja ).
+    - cd /path/root/project && vendro/bin/phpunit
 #### 6. Integrasi API dengan handle selain response success ( 200 / 400 )
         - Register
         (POST) https://reqres.in/api/register
@@ -36,9 +47,18 @@
         [3] => 150000
         [4] => 200000
         )
+    hasil: http://your-domain/api/task-7
 #### 8. Integrasi Lumen/Node.js/.net/Go yang sudah dikerjakan dengan Sentry.
+    
+    hasil: http://your-domain/api/debug-sentry
 #### 9. Membuat dokumentasi API diatas menggunakan swagger. ex : darkaonline/l5-swagger atau darkaonline/swagger-lume.
+    hasil: http://your-domain/api/documentation
 #### 10. Integrasi Lumen/Node.js/.net/Go yang sudah dikerjakan dengan Mailgun.
+    setup .env field below
+    MAIL_MAILER=mailgun
+    MAILGUN_DOMAIN=
+    MAILGUN_SECRET=
+    MAILGUN_ENDPOINT=
 
 # Lumen PHP Framework
 
