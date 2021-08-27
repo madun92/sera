@@ -2,19 +2,20 @@
 
 namespace App\Models;
 use Jenssegers\Mongodb\Eloquent\Model;
+
 /**
- * Class User
+ * Class Post
  *
  * @package 
  *
- * @author  Donii Sergii <doniysa@gmail.com>
+ * @author  Wahid Hidayat <lamjoart@gmail.com>
  *
  * @OA\Schema(
- *     description="Pet model",
- *     title="Pet model",
+ *     description="Post model",
+ *     title="Post model",
  *     required={"name", "fillable"},
  *     @OA\Xml(
- *         name="User"
+ *         name="Post"
  *     )
  * )
  */
@@ -27,12 +28,6 @@ class Post extends Model
      *
      * @var array
      * 
-     *   @OA\Property(
-     *     format="int64",
-     *     description="ID",
-     *     title="ID",
-     * )
-     *
      */
     protected $fillable = [
         'title',

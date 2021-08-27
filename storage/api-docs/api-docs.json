@@ -1,0 +1,255 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Swagger Sera test",
+        "description": "This is a sample server Petstore server.  You can find out more about Swagger at [http://swagger.io](http://swagger.io) or on [irc.freenode.net, #swagger](http://swagger.io/irc/).  For this sample, you can use the api key `special-key` to test the authorization filters.",
+        "termsOfService": "http://swagger.io/terms/",
+        "contact": {
+            "email": "apiteam@swagger.io"
+        },
+        "license": {
+            "name": "Apache 2.0",
+            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://sera.cin/api",
+            "description": "OpenApi host"
+        }
+    ],
+    "paths": {
+        "/login": {
+            "post": {
+                "tags": [
+                    "Auth"
+                ],
+                "summary": "Login",
+                "operationId": "login",
+                "parameters": [
+                    {
+                        "name": "email",
+                        "in": "query",
+                        "description": "Email address of the user ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "admin@gmail.com"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "Password ",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "404": {
+                        "description": "post not found"
+                    },
+                    "200": {
+                        "description": "ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "error": {
+                                            "description": "The response code",
+                                            "type": "string"
+                                        },
+                                        "message": {
+                                            "description": "The response message",
+                                            "type": "string"
+                                        },
+                                        "data": {
+                                            "description": "The response data",
+                                            "type": "array",
+                                            "items": {}
+                                        }
+                                    },
+                                    "type": "object",
+                                    "example": {
+                                        "error": false,
+                                        "message": "Success",
+                                        "data": []
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/post": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Listing post",
+                "description": "Home page",
+                "responses": {
+                    "default": {
+                        "description": "listing post"
+                    },
+                    "200": {
+                        "description": "successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/User"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Update an existing post",
+                "operationId": "updatepost",
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": [
+                            "write:posts",
+                            "read:posts"
+                        ]
+                    }
+                ]
+            }
+        },
+        "/post/{postId}": {
+            "get": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Show a post",
+                "operationId": "showpost",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "ID of post to return",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "6129116617c8fef7ff49c890"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "post not found"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Post"
+                ],
+                "summary": "Delete an existing post",
+                "operationId": "deletepost",
+                "parameters": [
+                    {
+                        "name": "postId",
+                        "in": "path",
+                        "description": "ID of post",
+                        "required": true,
+                        "schema": {
+                            "type": "string",
+                            "format": "string"
+                        },
+                        "example": "6129116617c8fef7ff49c890"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Success"
+                    },
+                    "404": {
+                        "description": "post not found"
+                    }
+                },
+                "security": [
+                    {
+                        "bearerAuth": []
+                    }
+                ]
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Post": {
+                "title": "Post model",
+                "description": "Post model",
+                "required": [
+                    "name",
+                    "fillable"
+                ],
+                "xml": {
+                    "name": "Post"
+                }
+            },
+            "User": {
+                "title": "User model",
+                "description": "User model",
+                "required": [
+                    "name",
+                    "fillable"
+                ],
+                "properties": {
+                    "fillable": {
+                        "title": "ID",
+                        "description": "ID",
+                        "format": "int64"
+                    }
+                },
+                "type": "object",
+                "xml": {
+                    "name": "User"
+                }
+            }
+        },
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "name": "Authorization",
+                "in": "header",
+                "bearerFormat": "JWT",
+                "scheme": "Bearer"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Auth",
+            "description": "Auth endpoints"
+        }
+    ],
+    "externalDocs": {
+        "description": "Find out more about Swagger",
+        "url": "http://swagger.io"
+    }
+}

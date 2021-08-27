@@ -7,8 +7,13 @@
     "require": {
         "php": "^7.3|^8.0",
         "darkaonline/swagger-lume": "^8.0",
+        "guzzlehttp/guzzle": "^7.3",
+        "guzzlehttp/psr7": "^1.2",
+        "illuminate/mail": "^8.56",
         "jenssegers/mongodb": "^3.8",
+        "kreait/laravel-firebase": "^2",
         "laravel/lumen-framework": "^8.0",
+        "sentry/sentry-laravel": "^2.8",
         "tymon/jwt-auth": "^1.0",
         "zircote/swagger-php": "3.*"
     },

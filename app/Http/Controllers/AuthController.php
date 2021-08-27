@@ -42,6 +42,70 @@ class AuthController extends Controller
     }
 
     /**
+     * Login
+     *
+     * @OA\Post(
+     *     path="/login",
+     *     tags={"Auth"},
+     *     operationId="login",
+     *     @OA\Parameter(
+     *       name="email",
+     *       in="query",
+     *       description="Email address of the user ",
+     *       required=true,
+     *       example="admin@gmail.com",
+     *       @OA\Schema(
+     *         type="string",
+     *       ),
+     *     ),
+     *     @OA\Parameter(
+     *       name="password",
+     *       in="query",
+     *       description="Password ",
+     *       required=true,
+     *       @OA\Schema(
+     *         type="string",
+     *       ),
+     *     ),
+     *     @OA\Response(
+     *         response=404,
+     *         description="post not found"
+     *     ),
+     *     @OA\Response(
+     *         response="200",
+     *         description="ok",
+     *         content={
+     *             @OA\MediaType(
+     *                 mediaType="application/json",
+     *                 @OA\Schema(
+     *                     @OA\Property(
+     *                         property="error",
+     *                         type="string",
+     *                         description="The response code"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="message",
+     *                         type="string",
+     *                         description="The response message"
+     *                     ),
+     *                     @OA\Property(
+     *                         property="data",
+     *                         type="array",
+     *                         description="The response data",
+     *                         @OA\Items
+     *                     ),
+     *                     example={
+     *                         "error": false,
+     *                         "message": "Success",
+     *                         "data": {}
+     *                     }
+     *                 )
+     *             )
+     *         }
+     *     ),
+     * )
+     */
+    /**
      * Get a JWT via given credentials.
      *
      * @return \Illuminate\Http\JsonResponse
@@ -56,7 +120,7 @@ class AuthController extends Controller
         $credentials = request(['email', 'password']);
 
         if (! $token = auth()->attempt($credentials)) {
-            throw new UnauthorizedException("Unauthorized", 200);
+            throw new UnauthorizedException("Invalid Login", 200);
         }
 
         return $this->responseJson(false, $this->respondWithToken($token));
