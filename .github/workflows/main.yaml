@@ -19,4 +19,5 @@ jobs:
       # - name: PHP Lint
         # uses: awanesia/PHP-Lint@master
       - run: php7.4 /usr/bin/composer install
+      - run: php7.4 vendor/bin/phpunit
       - run: which composer
