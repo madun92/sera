@@ -18,4 +18,4 @@ jobs:
       - run: echo "��� This job's status is ${{ job.status }}."
       - name: PHP Lint
         uses: awanesia/PHP-Lint@master
-      - run: composer install
+      - run: ls -la /usr/bin/php*
