@@ -22,14 +22,14 @@ RUN apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Install PHP extensions
 RUN docker-php-ext-install pdo_mysql mbstring exif pcntl bcmath gd \
-          && pecl install sqlsrv pdo_sqlsrv xdebug redis mongodb \
+          && pecl install sqlsrv pdo_sqlsrv-5.10.0 xdebug redis mongodb \
           && docker-php-ext-enable pdo_sqlsrv redis  mongodb
 
 # Get latest Composerpecl
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # COPY ../sera /var/www/
 COPY .docker/nginx.conf /etc/nginx/nginx.conf
-COPY .docker/configure.sh /configure.sh
+#COPY .docker/configure.sh /configure.sh
 COPY .docker/supervisord.conf /etc/supervisord.conf
 
 # Create system user to run Composer and Artisan Commands
